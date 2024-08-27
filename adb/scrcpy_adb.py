@@ -45,8 +45,8 @@ class ScrcpyADB:
             # except Exception as e:
             #     print(e)
 
-            # cv.imshow('frame', frame)
-            # cv.waitKey(1)
+            cv.imshow('frame', frame)
+            cv.waitKey(1)
 
     def touch_start(self, x: int or float, y: int or float):
         self.client.control.touch(int(x), int(y), scrcpy.ACTION_DOWN)

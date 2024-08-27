@@ -10,7 +10,7 @@ class GameControl:
         self.adb = adb
 
     def calc_mov_point(self, angle: float) -> Tuple[int, int]:
-        rx, ry = (205, 520)
+        rx, ry = (255, 505)
         r = 100
 
         x = rx + r * math.cos(angle * math.pi / 180)
@@ -25,7 +25,7 @@ class GameControl:
         self.adb.touch_end(x, y)
 
     def attack(self, t: float = 0.01):
-        x, y = (1142, 649)
+        x, y = (1030, 600)
         self.adb.touch_start(x, y)
         time.sleep(t)
         self.adb.touch_end(x, y)
@@ -33,11 +33,11 @@ class GameControl:
 
 if __name__ == '__main__':
     ctl = GameControl(ScrcpyADB())
-    ctl.move(180, 3)
+    ctl.move(180, 1)
     time.sleep(0.3)
     ctl.attack()
     time.sleep(0.3)
-    ctl.move(270, 5)
+    ctl.move(360, 3)
     time.sleep(0.3)
     ctl.attack(3)
 
