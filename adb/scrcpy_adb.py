@@ -9,7 +9,7 @@ class ScrcpyADB:
     def __init__(self):
         devices = adb.device_list()
         client = scrcpy.Client(device=devices[0])
-        # You can also pass an ADBClient instance to it
+        #  You can also pass an ADBClient instance to it
         adb.connect("127.0.0.1:5555")
         print(devices, client)
         client.add_listener(scrcpy.EVENT_FRAME, self.on_frame)
