@@ -5,9 +5,7 @@ import cv2 as cv
 # 1280 * 720 dpi 320
 if __name__ == '__main__':
     adb = ScrcpyADB()
-
-    index = 56
-
+    index = 0
     while True:
         index += 1
         time.sleep(2)

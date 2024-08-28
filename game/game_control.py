@@ -9,14 +9,16 @@ class GameControl:
     def __init__(self, adb: ScrcpyADB):
         self.adb = adb
 
+    # 计算移动目的坐标
     def calc_mov_point(self, angle: float) -> Tuple[int, int]:
-        rx, ry = (255, 505)
+        rx, ry = (242, 516)
         r = 100
 
         x = rx + r * math.cos(angle * math.pi / 180)
         y = ry - r * math.sin(angle * math.pi / 180)
         return int(x), int(y)
 
+    # 移动
     def move(self, angle: float, t: float):
         # 计算轮盘x, y坐标
         x, y = self.calc_mov_point(angle)
@@ -24,8 +26,9 @@ class GameControl:
         time.sleep(t)
         self.adb.touch_end(x, y)
 
+    # 攻击
     def attack(self, t: float = 0.01):
-        x, y = (1030, 600)
+        x, y = (1048, 620)
         self.adb.touch_start(x, y)
         time.sleep(t)
         self.adb.touch_end(x, y)

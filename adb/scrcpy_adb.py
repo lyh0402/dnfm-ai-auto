@@ -12,6 +12,7 @@ class ScrcpyADB:
         #  You can also pass an ADBClient instance to it
         adb.connect("127.0.0.1:5555")
         print(devices, client)
+        client.max_fps=60
         client.add_listener(scrcpy.EVENT_FRAME, self.on_frame)
         client.start(threaded=True)
         self.client = client
@@ -25,38 +26,42 @@ class ScrcpyADB:
     def on_frame(self, frame: cv.Mat):
         if frame is not None:
             self.last_screen = frame
-            # try:
-            #     result = self.yolo(frame)
-            #     print(result)
-            #     for obj in result:
-            #         color = (0, 255, 0)
-            #         if obj.label == 0:
-            #             color = (255, 0, 0)
-            #         elif obj.label == 5:
-            #             color = (0, 0, 255)
-            #
-            #         cv.rectangle(frame,
-            #                      (int(obj.rect.x), int(obj.rect.y)),
-            #                      (int(obj.rect.x + obj.rect.w), int(obj.rect.y + + obj.rect.h)),
-            #                      color, 2
-            #                      )
-            #         print(obj)
-            #
-            # except Exception as e:
-            #     print(e)
+            try:
+                result = self.yolo(frame)
+                print(result)
+                for obj in result:
+                    color = (0, 255, 0)
+                    if obj.label == 0:
+                        color = (255, 0, 0)
+                    elif obj.label == 5:
+                        color = (0, 0, 255)
+
+                    cv.rectangle(frame,
+                                 (int(obj.rect.x), int(obj.rect.y)),
+                                 (int(obj.rect.x + obj.rect.w), int(obj.rect.y + + obj.rect.h)),
+                                 color, 2
+                                 )
+                    print(obj)
+
+            except Exception as e:
+                print(e)
 
             cv.imshow('frame', frame)
             cv.waitKey(1)
 
+    # 触摸-按下
     def touch_start(self, x: int or float, y: int or float):
         self.client.control.touch(int(x), int(y), scrcpy.ACTION_DOWN)
 
+    # 触摸-移动
     def touch_move(self, x: int or float, y: int or float):
         self.client.control.touch(int(x), int(y), scrcpy.ACTION_MOVE)
 
+    # 触摸-抬起
     def touch_end(self, x: int or float, y: int or float):
         self.client.control.touch(int(x), int(y), scrcpy.ACTION_UP)
 
+    # 点击
     def tap(self, x: int or float, y: int or float):
         self.touch_start(x, y)
         time.sleep(0.01)

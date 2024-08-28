@@ -9,15 +9,15 @@ from ncnn.utils.objects import Detect_Object
 import math
 import numpy as np
 
-
+# 获取对象底部位置
 def get_detect_obj_bottom(obj: Detect_Object) -> Tuple[int, int]:
     return int(obj.rect.x + obj.rect.w / 2), int(obj.rect.y + obj.rect.h)
 
-
+# 计算箭头到角色的距离
 def distance_detect_object(a: Detect_Object, b: Detect_Object):
     return math.sqrt((a.rect.x - b.rect.x) ** 2 + (a.rect.y - b.rect.y) ** 2)
 
-
+# 计算角度
 def calc_angle(x1, y1, x2, y2):
     angle = math.atan2(y1 - y2, x1 - x2)
     return 180 - int(angle * 180 / math.pi)
@@ -33,6 +33,7 @@ class GameAction:
                             use_gpu=True)
         self.adb = self.ctrl.adb
 
+    # 移动到下一个房间
     def mov_to_next_room(self):
         t = time.time()
         mov_start = False
