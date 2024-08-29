@@ -1,0 +1,8 @@
+# pip install -r requirements.txt
+
+# Base ----------------------------------------
+adbutils
+scrcpy-client[ui]
+opencv-python
+ncnn
+numpy

@@ -1,3 +1,4 @@
+import numpy as np
 from adbutils import adb
 import scrcpy
 import cv2 as cv
@@ -16,35 +17,35 @@ class ScrcpyADB:
         client.add_listener(scrcpy.EVENT_FRAME, self.on_frame)
         client.start(threaded=True)
         self.client = client
-        self.yolo = YoloV5s(target_size=640,
-                            prob_threshold=0.25,
-                            nms_threshold=0.45,
-                            num_threads=4,
-                            use_gpu=True)
-        self.last_screen = None
+        # self.yolo = YoloV5s(target_size=640,
+        #                     prob_threshold=0.25,
+        #                     nms_threshold=0.45,
+        #                     num_threads=4,
+        #                     use_gpu=True)
+        # self.last_screen = None
 
-    def on_frame(self, frame: cv.Mat):
+    def on_frame(self, frame: np.ndarray):
         if frame is not None:
             self.last_screen = frame
-            try:
-                result = self.yolo(frame)
-                print(result)
-                for obj in result:
-                    color = (0, 255, 0)
-                    if obj.label == 0:
-                        color = (255, 0, 0)
-                    elif obj.label == 5:
-                        color = (0, 0, 255)
-
-                    cv.rectangle(frame,
-                                 (int(obj.rect.x), int(obj.rect.y)),
-                                 (int(obj.rect.x + obj.rect.w), int(obj.rect.y + + obj.rect.h)),
-                                 color, 2
-                                 )
-                    print(obj)
-
-            except Exception as e:
-                print(e)
+            # try:
+            #     result = self.yolo(frame)
+            #     print(result)
+            #     for obj in result:
+            #         color = (0, 255, 0)
+            #         if obj.label == 0:
+            #             color = (255, 0, 0)
+            #         elif obj.label == 5:
+            #             color = (0, 0, 255)
+            #
+            #         cv.rectangle(frame,
+            #                      (int(obj.rect.x), int(obj.rect.y)),
+            #                      (int(obj.rect.x + obj.rect.w), int(obj.rect.y + + obj.rect.h)),
+            #                      color, 2
+            #                      )
+            #         print(obj)
+            #
+            # except Exception as e:
+            #     print(e)
 
             cv.imshow('frame', frame)
             cv.waitKey(1)
@@ -71,5 +72,5 @@ class ScrcpyADB:
 if __name__ == '__main__':
     sadb = ScrcpyADB()
     time.sleep(5)
-    sadb.tap(1568 / 1.25, 166 / 1.25)
+    sadb.tap(1222, 125)
     time.sleep(999)
